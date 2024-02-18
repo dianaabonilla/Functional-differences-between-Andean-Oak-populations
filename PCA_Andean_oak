@@ -88,5 +88,37 @@ PCA_bioclim2 <-fviz_pca_biplot(res.pca,
 ####PCA FUNCTIONAL TRAITS####
 #############################
 
+# Import Dataset
+DATA <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_ROBLEDALES.csv")
 
+# Filter data by ontogenetic stage
+DTadultos <- DATA %>%
+  filter(EDAD == "Adulto")
+DTjuveniles <- DATA %>%
+  filter(EDAD == "Juvenil")
+
+# Omit NA's
+DTadultos <- na.omit(DTadultos)
+DTjuveniles <- na.omit(DTjuveniles)
+
+### Principal Component Analysis (PCA) by ontogenetic stage
+
+# Adults
+res.pca1 <- PCA(DTadultos[,4:ncol(DATA)], scale.unit = TRUE, ncp = 2, graph = TRUE)
+PCAadultos<-fviz_pca_biplot(res.pca1, 
+                            col.ind = DTadultos$POBLACION, 
+                            addEllipses = TRUE, label = "var",
+                            col.var = "black", repel = TRUE,
+                            legend.title = "Poblacion",  palette = c("#00AFBB", "#E7B800", "#FC4E07"))
+
+# Juveniles
+res.pca2 <- PCA(DTjuveniles[,4:ncol(DATA)], scale.unit = TRUE, ncp = 2, graph = TRUE)
+PCAjuveniles<-fviz_pca_biplot(res.pca2, 
+                              col.ind = DTjuveniles$POBLACION, 
+                              addEllipses = TRUE, label = "var",
+                              col.var = "black", repel = TRUE,
+                              legend.title = "Poblacion",  palette = c("#00AFBB", "#E7B800", "#FC4E07"))
+
+require(gridExtra)
+grid.arrange(PCAadultos,PCAjuveniles, ncol=1)
 
