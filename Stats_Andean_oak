@@ -1,0 +1,24 @@
+# Code to evaluate statistical differences between three populations of Andean oak (Arcabuco, Chicaque and Encino) and two ontogenetic stages (adult and juvenile).
+
+# Step 1: Import Dataset and load packages
+
+DATA <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_ROBLEDALES.csv")
+DATA <- na.omit(DATA)
+
+library(tidyverse)
+library(ggplot2)
+
+# Step 2: Transforming data
+
+DATA_log <- log_scale  %>% add_column(POBLACION=DATA$POBLACION)%>% add_column(EDAD=DATA$EDAD)
+
+DATA_A <- DATA_log %>%
+  filter(EDAD == "Adulto")
+
+DATA_J <- DATA_log %>%
+  filter(EDAD == "Juvenil")
+
+# Step 3: Evaluate parametric test assumptions
+
+### LT
+
