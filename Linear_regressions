@@ -1,0 +1,48 @@
+# Import Dataset
+
+DATA_REG <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_REGRESION.csv")
+DATA_REG <- na.omit(DATA_REG)
+
+# Load packages
+
+library(effects)
+library(car)
+library(gridExtra)
+
+# Multiple linear regression (lm) by trait
+
+model1 = lm(LT~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model1)
+S(model1)
+e.model1 = predictorEffects(model1)
+plot(e.model1,lines=list(multiline=TRUE))
+
+model2 = lm(LA~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model2)
+S(model2)
+e.model2 = predictorEffects(model2)
+plot(e.model2,lines=list(multiline=TRUE))
+
+model3 = lm(SLA~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model3)
+S(model3)
+e.model3 = predictorEffects(model3)
+plot(e.model3,lines=list(multiline=TRUE))
+
+model4 = lm(LDMC~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model4)
+S(model4)
+e.model4 = predictorEffects(model4)
+plot(e.model4,lines=list(multiline=TRUE))
+
+model5 = lm(WD~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model5)
+S(model5)
+e.model5 = predictorEffects(model5)
+plot(e.model5,lines=list(multiline=TRUE))
+
+model6 = lm(SRL~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model6)
+S(model6)
+e.model6 = predictorEffects(model6)
+plot(e.model6,lines=list(multiline=TRUE))
