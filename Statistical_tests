@@ -13,6 +13,7 @@ library(car)
 library(gridExtra)
 
 # Step 2: Transforming data
+# Note: Before the transformation, most of the datasets did not meet the assumptions of the parametric tests.
 
 DATA_log <- log_scale  %>% add_column(POBLACION=DATA$POBLACION)%>% add_column(EDAD=DATA$EDAD)
 
