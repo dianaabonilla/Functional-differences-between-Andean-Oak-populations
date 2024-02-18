@@ -1,4 +1,4 @@
-# Code to evaluate statistical differences between three populations of Andean oak (Arcabuco, Chicaque and Encino) and two ontogenetic stages (adult and juvenile).
+# Code to evaluate statistical differences between functional traits of three populations of Andean oak (Arcabuco, Chicaque and Encino) and two ontogenetic stages (adult and juvenile).
 
 # Step 1: Import Dataset and load packages
 
@@ -18,7 +18,368 @@ DATA_A <- DATA_log %>%
 DATA_J <- DATA_log %>%
   filter(EDAD == "Juvenil")
 
-# Step 3: Evaluate parametric test assumptions
+# Step 3: Evaluate parametric test assumptions (for inter-populations comparisons)
+
+### Leaf Thickness (LT)
+
+# Normality - qqplot
+by(DATA_log,DATA_log$POBLACION,function(tab)
+{qqnorm(tab$LT,main=unique(tab$POBLACION))
+qqline(tab$LT)
+})
+
+# Normality - shapiro test
+# Adults
+shapiro.test(DATA_A$LT[DATA_A$POBLACION=="Arcabuco"])
+shapiro.test(DATA_A$LT[DATA_A$POBLACION=="Chicaque"])
+shapiro.test(DATA_A$LT[DATA_A$POBLACION=="Encino "])
+# Juveniles
+shapiro.test(DATA_J$LT[DATA_J$POBLACION=="Arcabuco J"])
+shapiro.test(DATA_J$LT[DATA_J$POBLACION=="Chicaque J"])
+shapiro.test(DATA_J$LT[DATA_J$POBLACION=="Encino J"])
+
+# Homocedasticity
+car::leveneTest(DATA_log$LT ~ DATA_log$POBLACION)
+car::leveneTest(DATA_A$LT ~ DATA_A$POBLACION) # Adults
+car::leveneTest(DATA_J$LT ~ DATA_J$POBLACION) # Juveniles
+
+### Leaf Area (LA)
+
+by(DATA_log,DATA_log$POBLACION,function(tab)
+{qqnorm(tab$LA,main=unique(tab$POBLACION))
+qqline(tab$LA)
+})
+
+shapiro.test(DATA_A$LA[DATA_A$POBLACION=="Arcabuco"])
+shapiro.test(DATA_A$LA[DATA_A$POBLACION=="Chicaque"])
+shapiro.test(DATA_A$LA[DATA_A$POBLACION=="Encino "])
+
+shapiro.test(DATA_J$LA[DATA_J$POBLACION=="Arcabuco J"])
+shapiro.test(DATA_J$LA[DATA_J$POBLACION=="Chicaque J"])
+shapiro.test(DATA_J$LA[DATA_J$POBLACION=="Encino J"])
+
+car::leveneTest(DATA_log$LA ~ DATA_log$POBLACION)
+car::leveneTest(DATA_A$LA ~ DATA_A$POBLACION)
+car::leveneTest(DATA_J$LA ~ DATA_J$POBLACION)
+
+### Specific Leaf Area (SLA)
+
+by(DATA_log,DATA_log$POBLACION,function(tab)
+{qqnorm(tab$SLA,main=unique(tab$POBLACION))
+qqline(tab$SLA)
+})
+
+shapiro.test(DATA_A$SLA[DATA_A$POBLACION=="Arcabuco"])
+shapiro.test(DATA_A$SLA[DATA_A$POBLACION=="Chicaque"])
+shapiro.test(DATA_A$SLA[DATA_A$POBLACION=="Encino "])
+
+shapiro.test(DATA_J$SLA[DATA_J$POBLACION=="Arcabuco J"])
+shapiro.test(DATA_J$SLA[DATA_J$POBLACION=="Chicaque J"])
+shapiro.test(DATA_J$SLA[DATA_J$POBLACION=="Encino J"])
+
+car::leveneTest(DATA_log$SLA ~ DATA_log$POBLACION)
+car::leveneTest(DATA_A$SLA ~ DATA_A$POBLACION) #heterocedasticity in adults
+car::leveneTest(DATA_J$SLA ~ DATA_J$POBLACION)
+
+### Leaf Dry Matter Content (LDMC)
+
+by(DATA_log,DATA_log$POBLACION,function(tab)
+{qqnorm(tab$LDMC,main=unique(tab$POBLACION))
+qqline(tab$LDMC)
+})
+
+shapiro.test(DATA_A$LDMC[DATA_A$POBLACION=="Arcabuco"])
+shapiro.test(DATA_A$LDMC[DATA_A$POBLACION=="Chicaque"])
+shapiro.test(DATA_A$LDMC[DATA_A$POBLACION=="Encino "])
+
+shapiro.test(DATA_J$LDMC[DATA_J$POBLACION=="Arcabuco J"])
+shapiro.test(DATA_J$LDMC[DATA_J$POBLACION=="Chicaque J"])
+shapiro.test(DATA_J$LDMC[DATA_J$POBLACION=="Encino J"])
+
+car::leveneTest(DATA_log$LDMC ~ DATA_log$POBLACION)
+car::leveneTest(DATA_A$LDMC ~ DATA_A$POBLACION)
+car::leveneTest(DATA_J$LDMC ~ DATA_J$POBLACION)
+
+### Wood Density (WD)
+
+by(DATA_log,DATA_log$POBLACION,function(tab)
+{qqnorm(tab$WD,main=unique(tab$POBLACION))
+qqline(tab$WD)
+})
+
+shapiro.test(DATA_A$WD[DATA_A$POBLACION=="Arcabuco"])
+shapiro.test(DATA_A$WD[DATA_A$POBLACION=="Chicaque"])
+shapiro.test(DATA_A$WD[DATA_A$POBLACION=="Encino "])
+
+shapiro.test(DATA_J$WD[DATA_J$POBLACION=="Arcabuco J"])
+shapiro.test(DATA_J$WD[DATA_J$POBLACION=="Chicaque J"])
+shapiro.test(DATA_J$WD[DATA_J$POBLACION=="Encino J"])
+
+car::leveneTest(DATA_log$WD ~ DATA_log$POBLACION)
+car::leveneTest(DATA_A$WD ~ DATA_A$POBLACION)
+car::leveneTest(DATA_J$WD ~ DATA_J$POBLACION)
+
+### Specific Root Length (SRL)
+
+by(DATA_log,DATA_log$POBLACION,function(tab)
+{qqnorm(tab$SRL,main=unique(tab$POBLACION))
+qqline(tab$SRL)
+})
+
+shapiro.test(DATA_A$SRL[DATA_A$POBLACION=="Arcabuco"])
+shapiro.test(DATA_A$SRL[DATA_A$POBLACION=="Chicaque"])
+shapiro.test(DATA_A$SRL[DATA_A$POBLACION=="Encino "])
+
+shapiro.test(DATA_J$SRL[DATA_J$POBLACION=="Arcabuco J"])
+shapiro.test(DATA_J$SRL[DATA_J$POBLACION=="Chicaque J"])
+shapiro.test(DATA_J$SRL[DATA_J$POBLACION=="Encino J"])
+
+car::leveneTest(DATA_log$SRL ~ DATA_log$POBLACION)
+car::leveneTest(DATA_A$SRL ~ DATA_A$POBLACION)
+car::leveneTest(DATA_J$SRL ~ DATA_J$POBLACION)
+
+# Step 4: Evaluate parametric test assumptions (for intra-populations comparisons)
+
+################
+####ARCABUCO####
+################
+
+DATA_1 <- bind_rows(DATA_log %>%
+  filter(POBLACION=="Arcabuco"), DATA_log %>%
+  filter(POBLACION=="Arcabuco J"))
 
 ### LT
+
+by(DATA_1,DATA_1$EDAD,function(tab)
+{qqnorm(tab$LT,main=unique(tab$EDAD))
+qqline(tab$LT)
+})
+
+shapiro.test(DATA_1$LT[DATA_1$EDAD=="Adulto"])
+shapiro.test(DATA_1$LT[DATA_1$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_1$LT ~ DATA_1$EDAD)
+
+### LA
+
+by(DATA_1,DATA_1$EDAD,function(tab)
+{qqnorm(tab$LA,main=unique(tab$EDAD))
+qqline(tab$LA)
+})
+
+shapiro.test(DATA_1$LA[DATA_1$EDAD=="Adulto"])
+shapiro.test(DATA_1$LA[DATA_1$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_1$LA ~ DATA_1$EDAD)
+
+### SLA
+
+by(DATA_1,DATA_1$EDAD,function(tab)
+{qqnorm(tab$SLA,main=unique(tab$EDAD))
+qqline(tab$SLA)
+})
+
+shapiro.test(DATA_1$SLA[DATA_1$EDAD=="Adulto"])
+shapiro.test(DATA_1$SLA[DATA_1$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_1$SLA ~ DATA_1$EDAD)
+
+### LDMC
+
+by(DATA_1,DATA_1$EDAD,function(tab)
+{qqnorm(tab$LDMC,main=unique(tab$EDAD))
+qqline(tab$LDMC)
+})
+
+shapiro.test(DATA_1$LDMC[DATA_1$EDAD=="Adulto"])
+shapiro.test(DATA_1$LDMC[DATA_1$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_1$LDMC ~ DATA_1$EDAD)
+
+### WD
+
+by(DATA_1,DATA_1$EDAD,function(tab)
+{qqnorm(tab$WD,main=unique(tab$EDAD))
+qqline(tab$WD)
+})
+
+shapiro.test(DATA_1$WD[DATA_1$EDAD=="Adulto"])
+shapiro.test(DATA_1$WD[DATA_1$EDAD=="Juvenil"])
+
+
+car::leveneTest(DATA_1$WD ~ DATA_1$EDAD)
+
+### SRL
+
+by(DATA_1,DATA_1$EDAD,function(tab)
+{qqnorm(tab$SRL,main=unique(tab$EDAD))
+qqline(tab$SRL)
+})
+
+shapiro.test(DATA_1$SRL[DATA_1$EDAD=="Adulto"])
+shapiro.test(DATA_1$SRL[DATA_1$EDAD=="Juvenil"])
+
+
+car::leveneTest(DATA_1$SRL ~ DATA_1$EDAD)
+
+################
+####CHICAQUE####
+################
+
+DATA_2 <- bind_rows(DATA_log %>%
+                      filter(POBLACION=="Chicaque"), DATA_log %>%
+                      filter(POBLACION=="Chicaque J"))
+
+### LT
+
+by(DATA_2,DATA_2$EDAD,function(tab)
+{qqnorm(tab$LT,main=unique(tab$EDAD))
+  qqline(tab$LT)
+})
+
+shapiro.test(DATA_2$LT[DATA_2$EDAD=="Adulto"])
+shapiro.test(DATA_2$LT[DATA_2$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_2$LT ~ DATA_2$EDAD)
+
+### LA
+
+by(DATA_2,DATA_2$EDAD,function(tab)
+{qqnorm(tab$LA,main=unique(tab$EDAD))
+  qqline(tab$LA)
+})
+
+shapiro.test(DATA_2$LA[DATA_2$EDAD=="Adulto"])
+shapiro.test(DATA_2$LA[DATA_2$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_2$LA ~ DATA_2$EDAD)
+
+### SLA
+
+by(DATA_2,DATA_2$EDAD,function(tab)
+{qqnorm(tab$SLA,main=unique(tab$EDAD))
+  qqline(tab$SLA)
+})
+
+shapiro.test(DATA_2$SLA[DATA_2$EDAD=="Adulto"])
+shapiro.test(DATA_2$SLA[DATA_2$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_2$SLA ~ DATA_2$EDAD)
+
+### LDMC
+
+by(DATA_2,DATA_2$EDAD,function(tab)
+{qqnorm(tab$LDMC,main=unique(tab$EDAD))
+  qqline(tab$LDMC)
+})
+
+shapiro.test(DATA_2$LDMC[DATA_2$EDAD=="Adulto"])
+shapiro.test(DATA_2$LDMC[DATA_2$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_2$LDMC ~ DATA_2$EDAD)
+
+### WD
+
+by(DATA_2,DATA_2$EDAD,function(tab)
+{qqnorm(tab$WD,main=unique(tab$EDAD))
+  qqline(tab$WD)
+})
+shapiro.test(DATA_2$WD[DATA_2$EDAD=="Adulto"])
+shapiro.test(DATA_2$WD[DATA_2$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_2$WD ~ DATA_2$EDAD)
+
+### SRL
+
+by(DATA_2,DATA_2$EDAD,function(tab)
+{qqnorm(tab$SRL,main=unique(tab$EDAD))
+  qqline(tab$SRL)
+})
+
+shapiro.test(DATA_2$SRL[DATA_2$EDAD=="Adulto"])
+shapiro.test(DATA_2$SRL[DATA_2$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_2$SRL ~ DATA_2$EDAD)
+
+##############
+####ENCINO####
+##############
+
+DATA_3 <- bind_rows(DATA_log %>%
+                      filter(POBLACION=="Encino "), DATA_log %>%
+                      filter(POBLACION=="Encino J"))
+
+### LT
+
+by(DATA_3,DATA_3$EDAD,function(tab)
+{qqnorm(tab$LT,main=unique(tab$EDAD))
+  qqline(tab$LT)
+})
+
+shapiro.test(DATA_3$LT[DATA_3$EDAD=="Adulto"])
+shapiro.test(DATA_3$LT[DATA_3$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_3$LT ~ DATA_3$EDAD)
+
+### LA
+
+by(DATA_3,DATA_3$EDAD,function(tab)
+{qqnorm(tab$LA,main=unique(tab$EDAD))
+  qqline(tab$LA)
+})
+
+shapiro.test(DATA_3$LA[DATA_3$EDAD=="Adulto"])
+shapiro.test(DATA_3$LA[DATA_3$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_3$LA ~ DATA_3$EDAD)
+
+### SLA
+
+by(DATA_3,DATA_3$EDAD,function(tab)
+{qqnorm(tab$SLA,main=unique(tab$EDAD))
+  qqline(tab$SLA)
+})
+
+shapiro.test(DATA_3$SLA[DATA_3$EDAD=="Adulto"])
+shapiro.test(DATA_3$SLA[DATA_3$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_3$SLA ~ DATA_3$EDAD)
+
+### LDMC
+
+by(DATA_3,DATA_3$EDAD,function(tab)
+{qqnorm(tab$LDMC,main=unique(tab$EDAD))
+  qqline(tab$LDMC)
+})
+
+shapiro.test(DATA_3$LDMC[DATA_3$EDAD=="Adulto"])
+shapiro.test(DATA_3$LDMC[DATA_3$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_3$LDMC ~ DATA_3$EDAD)
+
+### WD
+
+by(DATA_3,DATA_3$EDAD,function(tab)
+{qqnorm(tab$WD,main=unique(tab$EDAD))
+  qqline(tab$WD)
+})
+shapiro.test(DATA_3$WD[DATA_3$EDAD=="Adulto"])
+shapiro.test(DATA_3$WD[DATA_3$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_3$WD ~ DATA_3$EDAD)
+
+### SRL
+
+by(DATA_3,DATA_3$EDAD,function(tab)
+{qqnorm(tab$SRL,main=unique(tab$EDAD))
+  qqline(tab$SRL)
+})
+
+shapiro.test(DATA_3$SRL[DATA_3$EDAD=="Adulto"])
+shapiro.test(DATA_3$SRL[DATA_3$EDAD=="Juvenil"])
+
+car::leveneTest(DATA_3$SRL ~ DATA_3$EDAD)
+
+# Step 5: Statistical tests
+
 
