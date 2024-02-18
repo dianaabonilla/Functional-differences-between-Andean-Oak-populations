@@ -1,0 +1,24 @@
+# Import Database and load packages
+
+DATA <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_ROBLEDALES.csv")
+
+library(cati)
+library(tidyverse)
+
+# Filter data by ontogenetic stage
+
+DATA_A <- DATA %>%
+  filter(EDAD == "Adulto")
+DATA_J <- DATA %>%
+  filter(EDAD == "Juvenil")
+
+# Calculate T_IP.IR (Adapted from T_IC.IR)
+
+res.robles <- Tstats(DATA_A[,4:ncol(DATA_A)], factor(DATA_A$POBLACION), factor(DATA_A$ESPECIE),nperm = 1000, print = FALSE)
+res.robles.J <- Tstats(DATA_J[,4:ncol(DATA_J)], factor(DATA_J$POBLACION), factor(DATA_J$ESPECIE),nperm = 1000, print = FALSE)
+
+# Plot
+
+par(mfrow=c(1,2))
+plot(res.robles, type="normal", col.index = c("#00AFBB", "#272727", "#FC4E07"))
+plot(res.robles.J, type="normal", col.index = c("#00AFBB", "#272727", "#FC4E07"))
