@@ -380,6 +380,163 @@ shapiro.test(DATA_3$SRL[DATA_3$EDAD=="Juvenil"])
 
 car::leveneTest(DATA_3$SRL ~ DATA_3$EDAD)
 
-# Step 5: Statistical tests
+# Step 5: Statistical tests (inter-populations comparisons)
 
+#############################
+####ADULTS BY POPULATIONS####
+#############################
+
+boxplot(LT ~ POBLACION, data = DATA_A)
+modelo1 <- aov(LT ~ POBLACION, data = DATA_A) # anova
+summary(modelo1)
+pairwise.t.test( DATA_A$LT, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc test
+
+boxplot(LA ~ POBLACION, data = DATA_A)
+modelo1 <- aov(LA ~ POBLACION, data = DATA_A) # anova
+summary(modelo1)
+pairwise.t.test( DATA_A$LA, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc test
+
+boxplot(SLA ~ POBLACION, data = DATA_A)
+modelo1 <- aov(SLA ~ POBLACION, data = DATA_A) # anova
+summary(modelo1)
+oneway.test(SLA ~ POBLACION, data = DATA_A, var.equal = FALSE) # anova welch
+pairwise.t.test(DATA_A$SLA, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc test
+kruskal.test(SLA ~ POBLACION, data = DATA_A) # non parametric test
+pairwise.wilcox.test(DATA_A$SLA, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc non parametric test
+
+boxplot(LDMC ~ POBLACION, data = DATA_A)
+modelo1 <- aov(LDMC ~ POBLACION, data = DATA_A) # anova
+summary(modelo1)
+pairwise.t.test(DATA_A$LDMC, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc test
+oneway.test(LDMC ~ POBLACION, data = DATA_A, var.equal = FALSE) # anova welch
+kruskal.test(LDMC ~ POBLACION, data = DATA_A) # non parametric test
+pairwise.wilcox.test(DATA_A$LDMC, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc non parametric test
+
+boxplot(WD ~ POBLACION, data = DATA_A)
+modelo1 <- aov(WD ~ POBLACION, data = DATA_A) # anova
+summary(modelo1)
+pairwise.t.test( DATA_A$WD, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc test
+kruskal.test(WD~ POBLACION, data = DATA_A) # non parametric test
+pairwise.wilcox.test(DATA_A$WD, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc non parametric test
+
+boxplot(SRL ~ POBLACION, data = DATA_A)
+modelo1 <- aov(SRL ~ POBLACION, data = DATA_A) # anova
+summary(modelo1)
+pairwise.t.test( DATA_A$SRL, DATA_A$POBLACION, p.adj = "bonferroni") # post hoc test
+
+################################
+####JUVENILES BY POPULATIONS####
+################################
+
+boxplot(LT ~ POBLACION, data = DATA_J)
+modelo1 <- aov(LT ~ POBLACION, data = DATA_J) # anova
+summary(modelo1)
+pairwise.t.test( DATA_J$LT, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc test
+
+boxplot(LA ~ POBLACION, data = DATA_J)
+modelo1 <- aov(LA ~ POBLACION, data = DATA_J) # anova
+summary(modelo1)
+pairwise.t.test(DATA_J$LA, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc test
+kruskal.test(LA ~ POBLACION, data = DATA_J) # non parametric test
+pairwise.wilcox.test(DATA_J$LA, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc non parametric test
+
+boxplot(SLA ~ POBLACION, data = DATA_J)
+modelo1 <- aov(SLA ~ POBLACION, data = DATA_J) # anova
+summary(modelo1)
+pairwise.t.test( DATA_J$SLA, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc test
+
+boxplot(LDMC ~ POBLACION, data = DATA_J)
+modelo1 <- aov(LDMC ~ POBLACION, data = DATA_J) # anova
+summary(modelo1)
+pairwise.t.test(DATA_J$LDMC, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc test
+oneway.test(LDMC ~ POBLACION, data = DATA_J, var.equal = FALSE) # anova welch
+kruskal.test(LDMC ~ POBLACION, data = DATA_J) # non parametric test
+pairwise.wilcox.test(DATA_J$LDMC, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc non parametric test
+
+boxplot(WD ~ POBLACION, data = DATA_J)
+modelo1 <- aov(WD ~ POBLACION, data = DATA_J) # anova
+summary(modelo1)
+pairwise.t.test( DATA_J$WD, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc test
+kruskal.test(WD ~ POBLACION, data = DATA_J) # non parametric test
+pairwise.wilcox.test(DATA_J$WD, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc non parametric test
+
+boxplot(SRL ~ POBLACION, data = DATA_J)
+modelo1 <- aov(SRL ~ POBLACION, data = DATA_J) # anova
+summary(modelo1)
+pairwise.t.test( DATA_J$SRL, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc test
+kruskal.test(SRL ~ POBLACION, data = DATA_J) # non parametric test
+pairwise.wilcox.test(DATA_J$SRL, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc non parametric test
+
+#Step 6: Statistical tests (intra-populations comparisons)
+
+###########################
+####ADULTS VS JUVENILES####
+###########################
+
+### Arcabuco
+
+boxplot(LT ~ EDAD, data=DATA_1)
+t.test(LT ~ EDAD, data=DATA_1,var.equal=T) # parametric test
+
+boxplot(LA ~ EDAD, data=DATA_1)
+t.test(LA ~ EDAD, data=DATA_1,var.equal=T) # parametric test
+wilcox.test(LA ~ EDAD, data=DATA_1) # non parametric test
+
+boxplot(SLA ~ EDAD, data=DATA_1)
+t.test(SLA ~ EDAD, data=DATA_1,var.equal=T) # parametric test
+
+boxplot(LDMC ~ EDAD, data=DATA_1)
+t.test(LDMC ~ EDAD, data=DATA_1,var.equal=T) # parametric test
+wilcox.test(LDMC ~ EDAD, data=DATA_1) # non parametric test
+
+boxplot(WD ~ EDAD, data=DATA_1)
+t.test(WD ~ EDAD, data=DATA_1,var.equal=T) # parametric test
+t.test(WD ~ EDAD, data=DATA_1,var.equal=F) # parametric test (welch)
+
+boxplot(SRL ~ EDAD, data=DATA_1)
+t.test(SRL ~ EDAD, data=DATA_1,var.equal=T) # parametric test
+
+### Chicaque
+
+boxplot(LT ~ EDAD, data=DATA_2)
+t.test(LT ~ EDAD, data=DATA_2,var.equal=T) # parametric test
+
+boxplot(LA ~ EDAD, data=DATA_2)
+t.test(LA ~ EDAD, data=DATA_2,var.equal=T) # parametric test
+
+boxplot(SLA ~ EDAD, data=DATA_2)
+t.test(SLA ~ EDAD, data=DATA_2,var.equal=T) # parametric test
+wilcox.test(SLA ~ EDAD, data=DATA_2) # non parametric test
+
+boxplot(LDMC ~ EDAD, data=DATA_2)
+t.test(LDMC ~ EDAD, data=DATA_2,var.equal=T) # parametric test
+
+boxplot(WD ~ EDAD, data=DATA_2)
+t.test(WD ~ EDAD, data=DATA_2,var.equal=T) # parametric test
+wilcox.test(WD ~ EDAD, data=DATA_2) # non parametric test
+
+boxplot(SRL ~ EDAD, data=DATA_2)
+t.test(SRL ~ EDAD, data=DATA_2,var.equal=T) # parametric test
+
+### Encino
+
+boxplot(LT ~ EDAD, data=DATA_3)
+t.test(LT ~ EDAD, data=DATA_3,var.equal=T) # parametric test
+
+boxplot(LA ~ EDAD, data=DATA_3)
+t.test(LA ~ EDAD, data=DATA_3,var.equal=T) # parametric test
+
+boxplot(SLA ~ EDAD, data=DATA_3)
+t.test(SLA ~ EDAD, data=DATA_3,var.equal=T) # parametric test
+
+boxplot(LDMC ~ EDAD, data=DATA_3)
+t.test(LDMC ~ EDAD, data=DATA_3,var.equal=T) # parametric test
+t.test(LDMC ~ EDAD, data=DATA_3,var.equal=F) # parametric test (welch)
+
+boxplot(WD ~ EDAD, data=DATA_3)
+t.test(WD ~ EDAD, data=DATA_3,var.equal=T) # parametric test
+
+boxplot(SRL ~ EDAD, data=DATA_3)
+t.test(SRL ~ EDAD, data=DATA_3,var.equal=T) # parametric test
+wilcox.test(SRL ~ EDAD, data=DATA_3) # non parametric test
 
