@@ -31,7 +31,7 @@ coordinates(coords_sample_places) = c("lon",
 map()
 points(coords_sample_places, pch=3)
 
-# Step 3: Extract data
+# Step 3: Import worldclim data
 
 bio4 = raster("wc2.1_30s_bio/wc2.1_30s_bio_4.tif") #Temperature Seasonality 
 bio5 = raster("wc2.1_30s_bio/wc2.1_30s_bio_5.tif") # Max Temperature of Warmest Month
@@ -41,20 +41,17 @@ bio14 = raster("wc2.1_30s_bio/wc2.1_30s_bio_14.tif") # Precipitation of Driest M
 bio15 = raster("wc2.1_30s_bio/wc2.1_30s_bio_15.tif") #Precipitation Seasonality
 elev = raster("wc2.1_30s_elev/wc2.1_30s_elev.tif") #Elevation
 
+# Step 4: Extract data using coordinates
+
 bio4_coords_sample_places = extract(x = bio4, y = coords_sample_places)
-
-bio5_coords_sample_places = extract(x = bio5, y = coords_sample_places)
-                                        
-bio6_coords_sample_places = extract(x = bio6,y = coords_sample_places)
-                                         
-bio13_coords_sample_places = extract(x = bio13,y = coords_sample_places)
-                                        
+bio5_coords_sample_places = extract(x = bio5, y = coords_sample_places)                          
+bio6_coords_sample_places = extract(x = bio6,y = coords_sample_places)                                       
+bio13_coords_sample_places = extract(x = bio13,y = coords_sample_places)                                  
 bio14_coords_sample_places = extract(x = bio14,y = coords_sample_places)
-
 bio15_coords_sample_places = extract(x = bio15,y = coords_sample_places)
-
 elev_coords_sample_places = extract(x = elev,y = coords_sample_places)
 
+# Step 5: Reorder and rename data
 
 bioclim_data = cbind(COORDENADAS[,1:3],
                                      bio4_coords_sample_places,
@@ -74,7 +71,7 @@ bioclim_data = bioclim_data %>%
           PS = bio15_coords_sample_places,
           Elev = elev_coords_sample_places)
 
-# Step 4: Principal Component Analysis (PCA)
+# Step 6: Principal Component Analysis (PCA)
 
 res.pca <- PCA(bioclim_data[,4:ncol(bioclim_data)], scale.unit = TRUE, ncp = 2, graph = TRUE)
 
@@ -88,10 +85,12 @@ PCA_bioclim2 <-fviz_pca_biplot(res.pca,
 ####PCA FUNCTIONAL TRAITS####
 #############################
 
-# Import Dataset
+# Step 1: Import Dataset
+
 DATA <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_ROBLEDALES.csv")
 
-# Filter data by ontogenetic stage
+# Step 2: Filter data by ontogenetic stage
+
 DTadultos <- DATA %>%
   filter(EDAD == "Adulto")
 DTjuveniles <- DATA %>%
@@ -101,7 +100,7 @@ DTjuveniles <- DATA %>%
 DTadultos <- na.omit(DTadultos)
 DTjuveniles <- na.omit(DTjuveniles)
 
-### Principal Component Analysis (PCA) by ontogenetic stage
+# Step 3: Principal Component Analysis (PCA) by ontogenetic stage
 
 # Adults
 res.pca1 <- PCA(DTadultos[,4:ncol(DATA)], scale.unit = TRUE, ncp = 2, graph = TRUE)
@@ -118,6 +117,8 @@ PCAjuveniles<-fviz_pca_biplot(res.pca2,
                               addEllipses = TRUE, label = "var",
                               col.var = "black", repel = TRUE,
                               legend.title = "Poblacion",  palette = c("#00AFBB", "#E7B800", "#FC4E07"))
+
+# Step 4: Plot
 
 require(gridExtra)
 grid.arrange(PCAadultos,PCAjuveniles, ncol=1)
