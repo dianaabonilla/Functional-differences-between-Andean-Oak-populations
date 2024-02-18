@@ -1,15 +1,16 @@
-# Import Dataset
+# As a post-hoc analysis, we conducted a linear model assessment using the R function "lm" incorporating
+# two categorical factors, ontogeny (EDAD) and population (POBLACION), along with their interaction (EDAD:POBLACION).
+
+# Step 1: Import Dataset and load packages
 
 DATA_REG <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_REGRESION.csv")
 DATA_REG <- na.omit(DATA_REG)
-
-# Load packages
 
 library(effects)
 library(car)
 library(gridExtra)
 
-# Multiple linear regression (lm) by trait
+# Step 2: Multiple linear regression (lm) by functional trait
 
 model1 = lm(LT~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
 print(model1)
