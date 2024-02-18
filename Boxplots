@@ -1,12 +1,15 @@
-# Load Packages
+# To illustrate differences in functional trait distributions between populations (Arcabuco, Chicaque and Encino)
+# and ontogenetic stages (Adults and Juveniles), we performed boxplots.
+
+# Step 1: Import Dataset and load Packages
+
+DATA <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_ROBLEDALES.csv")
+
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
 
-# Import Dataset
-DATA <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_ROBLEDALES.csv")
-
-# Boxplots by population and functional trait (Adults)
+# Step 2: Boxplots by population and functional trait (Adults)
 
 DTadultos <- DATA %>%
   filter(EDAD == "Adulto")
@@ -18,7 +21,7 @@ a4<-ggplot(DTadultos, aes(x=POBLACION, y=LT, fill=POBLACION)) + geom_boxplot() +
 a5<-ggplot(DTadultos, aes(x=POBLACION, y=WD, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0.25, 0.7)
 a6<-ggplot(DTadultos, aes(x=POBLACION, y=SLR, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0, 510)
 
-# Boxplots by population and functional trait (Juveniles)
+# Step 3: Boxplots by population and functional trait (Juveniles)
 
 DTjuveniles <- DATA %>%
   filter(EDAD == "Juvenil")
@@ -30,8 +33,10 @@ b4<-ggplot(DTjuveniles, aes(x=POBLACION, y=LT, fill=POBLACION)) + geom_boxplot()
 b5<-ggplot(DTjuveniles, aes(x=POBLACION, y=WD, fill=POBLACION)) + geom_boxplot() +  theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0.25, 0.7)
 b6<-ggplot(DTjuveniles, aes(x=POBLACION, y=SLR, fill=POBLACION)) + geom_boxplot() +  theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0, 510)
 
-# Plot
+# Step 4: Plot
+
 require(gridExtra)
+
 a<-grid.arrange(a3, b3, ncol=2)
 b<-grid.arrange(a1, b1, ncol=2)
 c<-grid.arrange(a2, b2, ncol=2)
