@@ -7,6 +7,9 @@ DATA <- na.omit(DATA)
 
 library(tidyverse)
 library(ggplot2)
+library(effects)
+library(car)
+library(gridExtra)
 
 # Step 2: Transforming data
 
@@ -18,7 +21,7 @@ DATA_A <- DATA_log %>%
 DATA_J <- DATA_log %>%
   filter(EDAD == "Juvenil")
 
-# Step 3: Evaluate parametric test assumptions (for inter-populations comparisons)
+# Step 3: Evaluate parametric test assumptions (for inter-population comparisons)
 
 ### Leaf Thickness (LT)
 
@@ -138,7 +141,7 @@ car::leveneTest(DATA_log$SRL ~ DATA_log$POBLACION)
 car::leveneTest(DATA_A$SRL ~ DATA_A$POBLACION)
 car::leveneTest(DATA_J$SRL ~ DATA_J$POBLACION)
 
-# Step 4: Evaluate parametric test assumptions (for intra-populations comparisons)
+# Step 4: Evaluate parametric test assumptions (for intra-population comparisons)
 
 ################
 ####ARCABUCO####
@@ -380,7 +383,7 @@ shapiro.test(DATA_3$SRL[DATA_3$EDAD=="Juvenil"])
 
 car::leveneTest(DATA_3$SRL ~ DATA_3$EDAD)
 
-# Step 5: Statistical tests (inter-populations comparisons)
+# Step 5: Statistical tests (inter-population comparisons)
 
 #############################
 ####ADULTS BY POPULATIONS####
@@ -467,7 +470,7 @@ pairwise.t.test( DATA_J$SRL, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc 
 kruskal.test(SRL ~ POBLACION, data = DATA_J) # non parametric test
 pairwise.wilcox.test(DATA_J$SRL, DATA_J$POBLACION, p.adj = "bonferroni") # post hoc non parametric test
 
-#Step 6: Statistical tests (intra-populations comparisons)
+#Step 6: Statistical tests (intra-population comparisons)
 
 ###########################
 ####ADULTS VS JUVENILES####
@@ -540,3 +543,47 @@ boxplot(SRL ~ EDAD, data=DATA_3)
 t.test(SRL ~ EDAD, data=DATA_3,var.equal=T) # parametric test
 wilcox.test(SRL ~ EDAD, data=DATA_3) # non parametric test
 
+Step 7: Linear regressions
+
+# Import Dataset
+
+DATA_REG <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_REGRESION.csv")
+DATA_REG <- na.omit(DATA_REG)
+
+# lm (multiple linear regression)
+
+model1 = lm(LT~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model1)
+S(model1)
+e.model1 = predictorEffects(model1)
+plot(e.model1,lines=list(multiline=TRUE))
+
+model2 = lm(LA~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model2)
+S(model2)
+e.model2 = predictorEffects(model2)
+plot(e.model2,lines=list(multiline=TRUE))
+
+model3 = lm(SLA~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model3)
+S(model3)
+e.model3 = predictorEffects(model3)
+plot(e.model3,lines=list(multiline=TRUE))
+
+model4 = lm(LDMC~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model4)
+S(model4)
+e.model4 = predictorEffects(model4)
+plot(e.model4,lines=list(multiline=TRUE))
+
+model5 = lm(WD~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model5)
+S(model5)
+e.model5 = predictorEffects(model5)
+plot(e.model5,lines=list(multiline=TRUE))
+
+model6 = lm(SRL~EDAD+POBLACION+EDAD:POBLACION,DATA_REG)
+print(model6)
+S(model6)
+e.model6 = predictorEffects(model6)
+plot(e.model6,lines=list(multiline=TRUE))
