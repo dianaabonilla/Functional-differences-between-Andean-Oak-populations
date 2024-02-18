@@ -1,0 +1,42 @@
+# Load Packages
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+
+# Import Dataset
+DATA <- read.csv2("~/TRABAJO/ARTICULO ROBLEDALES/DATA_ROBLEDALES.csv")
+
+# Boxplots by population and functional trait (Adults)
+
+DTadultos <- DATA %>%
+  filter(EDAD == "Adulto")
+
+a1<-ggplot(DTadultos, aes(x=POBLACION, y=SLA, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(50, 340)
+a2<-ggplot(DTadultos, aes(x=POBLACION, y=LDMC, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0, 1.7)
+a3<-ggplot(DTadultos, aes(x=POBLACION, y=LA, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(15, 110)
+a4<-ggplot(DTadultos, aes(x=POBLACION, y=LT, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0.6, 1.7)
+a5<-ggplot(DTadultos, aes(x=POBLACION, y=WD, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0.25, 0.7)
+a6<-ggplot(DTadultos, aes(x=POBLACION, y=SLR, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0, 510)
+
+# Boxplots by population and functional trait (Juveniles)
+
+DTjuveniles <- DATA %>%
+  filter(EDAD == "Juvenil")
+
+b1<-ggplot(DTjuveniles, aes(x=POBLACION, y=SLA, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(50, 340)
+b2<-ggplot(DTjuveniles, aes(x=POBLACION, y=LDMC, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0, 1.7)
+b3<-ggplot(DTjuveniles, aes(x=POBLACION, y=LA, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(15, 110)
+b4<-ggplot(DTjuveniles, aes(x=POBLACION, y=LT, fill=POBLACION)) + geom_boxplot() + theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0.6, 1.7)
+b5<-ggplot(DTjuveniles, aes(x=POBLACION, y=WD, fill=POBLACION)) + geom_boxplot() +  theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0.25, 0.7)
+b6<-ggplot(DTjuveniles, aes(x=POBLACION, y=SLR, fill=POBLACION)) + geom_boxplot() +  theme_classic()+ scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+xlab('')+theme(legend.position = "none")+ ylim(0, 510)
+
+# Plot
+require(gridExtra)
+a<-grid.arrange(a3, b3, ncol=2)
+b<-grid.arrange(a1, b1, ncol=2)
+c<-grid.arrange(a2, b2, ncol=2)
+d<-grid.arrange(a4, b4, ncol=2)
+e<-grid.arrange(a5, b5, ncol=2)
+f<-grid.arrange(a6, b6, ncol=2)
+
+grid.arrange(d,a,b,c,e,f)
